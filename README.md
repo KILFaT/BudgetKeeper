@@ -34,7 +34,7 @@
 * сумма расхода
 
 ### Структура БД:
-![alt text](https://github.com/kilfat/BudgetKeeper/raw/master/documents/DB.png "Структура базы данных")
+![alt text](https://github.com/kilfat/BudgetKeeper/raw/master/resources/DB.png "Структура базы данных")
 
 Возможность просматривать статистику расходов\доходов за день, неделю, месяц, год.
 
