@@ -1,6 +1,7 @@
 # BudgetKeeper
 > Web-service for keeping budget.
 
+## Сторона сервисов
 ### Сущности базы данных:
 * Пользователь (**User**)
 * Счет (**Account**)
@@ -46,6 +47,12 @@
 * Hibernate ORM - для отображения объектов на базу данных
 * PostrgeSQL - в качестве базы данных
 
-### Клиентская сторона:
-*
+## Клиентская сторона
+### Используемый стек технологий:
+* vue.js
+* bootstrap 4
+
+### Оформление страниц:
+#### Расходы
+![alt text](https://github.com/kilfat/BudgetKeeper/raw/master/resources/%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D1%8B.png)
 
