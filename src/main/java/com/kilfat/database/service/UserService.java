@@ -20,4 +20,8 @@ public class UserService {
     public User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 }

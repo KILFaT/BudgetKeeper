@@ -14,6 +14,10 @@
         <servletapi.version>3.1.0</servletapi.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <spring.data.version>2.0.0.RELEASE</spring.data.version>
+        <junit.version>4.12</junit.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
+        <slf4j.version>1.7.21</slf4j.version>
+        <log4j.version>2.9.0</log4j.version>
     </properties>
 
     <dependencies>
@@ -59,6 +63,44 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring.data.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,7 +137,5 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
-
 </project>
