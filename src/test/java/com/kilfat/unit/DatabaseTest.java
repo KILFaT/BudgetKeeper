@@ -1,4 +1,4 @@
-package com.kilfat;
+package com.kilfat.unit;
 
 import com.kilfat.config.DataConfigProfile;
 import com.kilfat.config.HSQLConfig;
@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @ActiveProfiles(DataConfigProfile.HSQLDB)
-
 @Transactional
 @ContextConfiguration(classes = {HSQLConfig.class, TestConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
