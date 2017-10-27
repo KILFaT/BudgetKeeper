@@ -32,6 +32,8 @@ public class User {
     @Type(type = "binary")
     private byte[] image;
 
+    public User() {
+    }
 
     public User(String name, String password) {
         this.name = name;

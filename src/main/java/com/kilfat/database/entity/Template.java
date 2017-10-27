@@ -24,4 +24,45 @@ public class Template {
     @Column(name = "AMOUNT")
     @NotNull
     private Integer amount;
+
+    public Template() {
+    }
+
+    public Template(Account account, Category category, Integer amount) {
+        this.account = account;
+        this.category = category;
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 }

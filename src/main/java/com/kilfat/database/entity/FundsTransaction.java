@@ -1,5 +1,6 @@
 package com.kilfat.database.entity;
 
+import com.kilfat.database.entity.enums.TransactionType;
 import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
@@ -25,11 +26,71 @@ public class FundsTransaction {
     @Column(name = "DATE", nullable = false, length = 10)
     private Date date;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "TRANSACTION_TYPE")
     @NotNull
-    private Enum transactionType;
+    private TransactionType transactionType;
 
     @Column(name = "AMOUNT")
     @NotNull
     private Integer amount;
+
+    public FundsTransaction() {
+    }
+
+    public FundsTransaction(Account account, Category category, Date date, TransactionType transactionType, Integer amount) {
+        this.account = account;
+        this.category = category;
+        this.date = date;
+        this.transactionType = transactionType;
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 }
