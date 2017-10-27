@@ -2,7 +2,12 @@ package com.kilfat.database.entity;
 
 import com.sun.istack.internal.NotNull;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -12,7 +17,7 @@ public class Category {
     @Column(name = "CATEGORY_ID", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME", length = 100)
     @NotNull
     private String name;
 
