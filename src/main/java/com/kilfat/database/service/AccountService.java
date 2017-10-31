@@ -38,4 +38,8 @@ public class AccountService {
     public List<Account> getAccountsByUser(User user) {
         return accountRepository.findAccountsByUser(user);
     }
+
+    public void deleteAccount(Long accountId) {
+        accountRepository.deleteById(accountId);
+    }
 }

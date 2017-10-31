@@ -24,11 +24,15 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Category.class, id));
     }
 
-    public Category saveCategory(Category Category) {
-        return categoryRepository.save(Category);
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
     }
 
-    public void deleteCategory(Category Category) {
-        categoryRepository.delete(Category);
+    public void deleteCategory(Category category) {
+        categoryRepository.delete(category);
+    }
+
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 }

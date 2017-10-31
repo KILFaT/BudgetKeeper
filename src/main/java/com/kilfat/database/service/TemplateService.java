@@ -42,4 +42,8 @@ public class TemplateService {
     public List<Template> findTemplatesByAccountAndCategory(Account account, Category category) {
         return templateRepository.findTemplatesByAccountAndCategory(account, category);
     }
+
+    public void deleteTemplate(Long templateId) {
+        templateRepository.deleteById(templateId);
+    }
 }

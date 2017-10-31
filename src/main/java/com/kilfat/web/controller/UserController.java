@@ -5,10 +5,13 @@ import com.kilfat.database.entity.User;
 import com.kilfat.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-//import com.kilfat.web.jsonview.Views;
-//import com.kilfat.web.model.AjaxResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = ServiceConstants.USER_PATH)
@@ -30,6 +33,7 @@ public class UserController {
     @RequestMapping(value = "{userId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putUser(@PathVariable("userId") Long userId, @RequestBody User user) {
+        user.setId(userId);
         userService.saveUser(user);
     }
 
@@ -45,19 +49,4 @@ public class UserController {
     User createUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
-
-//    @JsonView(Views.Public.class)
-//    @RequestMapping(value = "some")
-//    public AjaxResponseBody getSome(@RequestBody String some) {
-//        AjaxResponseBody<User> responseBody = new AjaxResponseBody();
-//        if (some.equalsIgnoreCase("tadaam")) {
-//            responseBody.setMessage("taadaaam");
-//            responseBody.setResult(Arrays.asList(new UserDTO("asd", "asd", "asda")));
-//        } else {
-//            responseBody.setMessage("WRONG! Not tadaam");
-//            responseBody.setStatusCode("404");
-//        }
-//        return responseBody;
-//    }
-
 }

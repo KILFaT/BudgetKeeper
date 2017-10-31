@@ -31,4 +31,8 @@ public class FundsTransactionService {
     public void deleteFundsTransaction(FundsTransaction fundsTransaction) {
         fundsTransactionRepository.delete(fundsTransaction);
     }
+
+    public void deleteFundsTransaction(Long transactionId) {
+        fundsTransactionRepository.deleteById(transactionId);
+    }
 }
