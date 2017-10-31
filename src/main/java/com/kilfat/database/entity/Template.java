@@ -1,8 +1,5 @@
 package com.kilfat.database.entity;
 
-
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -22,7 +19,6 @@ public class Template {
     private Category category;
 
     @Column(name = "AMOUNT")
-    @NotNull
     private Integer amount;
 
     public Template() {

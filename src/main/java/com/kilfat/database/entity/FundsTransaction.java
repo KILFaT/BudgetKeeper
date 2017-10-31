@@ -1,7 +1,6 @@
 package com.kilfat.database.entity;
 
 import com.kilfat.database.entity.enums.TransactionType;
-import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,11 +27,9 @@ public class FundsTransaction {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TRANSACTION_TYPE")
-    @NotNull
     private TransactionType transactionType;
 
     @Column(name = "AMOUNT")
-    @NotNull
     private Integer amount;
 
     public FundsTransaction() {

@@ -5,7 +5,7 @@ import com.kilfat.web.jsonview.Views;
 
 import java.util.List;
 
-public class AjaxResponseBody {
+public class AjaxResponseBody<T> {
     @JsonView(Views.Public.class)
     private String message;
 
@@ -13,7 +13,7 @@ public class AjaxResponseBody {
     private String statusCode;
 
     @JsonView(Views.Public.class)
-    private List<UserDTO> result;
+    private List<T> result;
 
     public String getMessage() {
         return message;
@@ -31,11 +31,11 @@ public class AjaxResponseBody {
         this.statusCode = statusCode;
     }
 
-    public List<UserDTO> getResult() {
+    public List<T> getResult() {
         return result;
     }
 
-    public void setResult(List<UserDTO> result) {
+    public void setResult(List<T> result) {
         this.result = result;
     }
 }

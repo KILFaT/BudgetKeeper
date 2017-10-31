@@ -1,7 +1,5 @@
 package com.kilfat.database.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +11,6 @@ public class Category {
     private Long id;
 
     @Column(name = "NAME", length = 100)
-    @NotNull
     private String name;
 
     public Category() {

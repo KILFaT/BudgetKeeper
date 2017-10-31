@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"com.kilfat.web"})
+@ComponentScan({"com.kilfat"})
 @Import({HSQLConfig.class, HibernateConfig.class})
 public class WebConfig extends WebMvcConfigurationSupport {
     @Override

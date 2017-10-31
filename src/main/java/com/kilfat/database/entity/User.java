@@ -1,13 +1,13 @@
 package com.kilfat.database.entity;
 
-import com.sun.istack.internal.NotNull;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,6 @@ public class User {
     private Long id;
 
     @Column(name = "NAME", length = 50)
-    @NotNull
     private String name;
 
 //    private byte[] encryptedPassword;

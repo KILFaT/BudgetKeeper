@@ -1,7 +1,6 @@
 package com.kilfat.database.entity;
 
 import com.kilfat.database.entity.enums.AccountType;
-import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 
@@ -23,11 +22,9 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE")
-    @NotNull
     private AccountType accountType;
 
     @Column(name = "AMOUNT")
-    @NotNull
     private Integer amount;
 
     public Account() {
