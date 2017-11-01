@@ -5,6 +5,7 @@ import com.kilfat.config.TestsBase;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -16,7 +17,7 @@ public class UserControllerTest extends TestsBase {
     @Test
     public void createAndGetUser() throws Exception {
         String json = "{\"name\":\"Vasya\",\"email\":\"asd@mail.ru\"}";
-        mockMvc.perform(get(USER_PATH + "/1"))
+        mockMvc.perform(get(USER_PATH + "/1").with(user("admin").password("password123")))
                 .andExpect(status().isOk()).andDo(print());
         mockMvc.perform(post(USER_PATH).contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated());

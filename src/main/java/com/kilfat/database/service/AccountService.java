@@ -5,6 +5,7 @@ import com.kilfat.database.entity.User;
 import com.kilfat.database.repository.AccountRepository;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Secured({"USER","ADMIN"})
 public class AccountService {
 
     private AccountRepository accountRepository;

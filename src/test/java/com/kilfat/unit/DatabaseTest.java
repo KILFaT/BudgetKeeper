@@ -42,10 +42,10 @@ public class DatabaseTest {
         User user = new User("Pavel", "password123");
         User savedUser = userService.saveUser(user);
         assertNotNull(savedUser);
-        assertEquals(savedUser.getName(), user.getName());
-        User userFromDb = userService.getUser(savedUser.getId());
+        assertEquals(savedUser.getUsername(), user.getUsername());
+        User userFromDb = userService.getUser(savedUser.getUsername());
         assertNotNull(userFromDb);
-        assertEquals(userFromDb.getName(), user.getName());
+        assertEquals(userFromDb.getUsername(), user.getUsername());
     }
 
     @Test

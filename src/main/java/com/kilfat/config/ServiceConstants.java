@@ -1,5 +1,7 @@
 package com.kilfat.config;
 
+import com.kilfat.database.entity.enums.RoleType;
+
 public interface ServiceConstants {
 
     String API_URL = "/api/";
@@ -15,4 +17,6 @@ public interface ServiceConstants {
     String TRANSACTION_PATH = API_URL + TRANSACTION;
     String TEMPLATE_PATH = API_URL + TEMPLATE;
 
+    String ROLE_ADMIN = RoleType.ADMIN.toString();
+    String ROLE_USER = RoleType.USER.toString();
 }

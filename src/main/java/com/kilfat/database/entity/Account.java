@@ -16,8 +16,7 @@ public class Account {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID",
-            nullable = false)
+    @JoinColumn(name = "USER_NAME", nullable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)

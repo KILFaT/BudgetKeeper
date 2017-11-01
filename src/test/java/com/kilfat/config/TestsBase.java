@@ -12,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.Resource;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 @ActiveProfiles(DataConfigProfile.HSQLDB)
 @ContextConfiguration(classes = {HSQLConfig.class, TestConfig.class, WebConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,6 +27,6 @@ public class TestsBase {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 }

@@ -4,23 +4,26 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID", nullable = false, unique = true)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(username = "USER_ID", nullable = false, unique = true)
+//    private Long id;
 
-    @Column(name = "NAME", length = 50)
-    private String name;
+    @Id
+    @Column(name = "USER_NAME", nullable = false, length = 40, unique = true)
+    private String username;
 
 //    private byte[] encryptedPassword;
 
 
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false, length = 60)
 //    @Type(type = "encryptedString")
     private String password;
 
@@ -31,35 +34,30 @@ public class User implements Serializable {
     @Type(type = "binary")
     private byte[] image;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<UserRole> userRole = new HashSet<UserRole>(0);
+
     public User() {
     }
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public User(String name, String password, String email, byte[] image) {
-        this.name = name;
+    public User(String username, String password, String email, byte[] image) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.image = image;
     }
 
-    public Long getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -88,5 +86,13 @@ public class User implements Serializable {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public Set<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Set<UserRole> userRole) {
+        this.userRole = userRole;
     }
 }

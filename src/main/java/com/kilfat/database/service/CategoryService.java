@@ -5,11 +5,13 @@ import com.kilfat.database.entity.Category;
 import com.kilfat.database.repository.CategoryRepository;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@Secured({"USER","ADMIN"})
 public class CategoryService {
 
     private CategoryRepository categoryRepository;
