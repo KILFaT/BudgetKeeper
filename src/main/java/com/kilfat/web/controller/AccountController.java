@@ -2,7 +2,7 @@ package com.kilfat.web.controller;
 
 import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.Account;
-import com.kilfat.database.service.AccountService;
+import com.kilfat.database.service.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;

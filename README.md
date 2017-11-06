@@ -56,3 +56,5 @@
 #### Расходы
 ![alt text](https://github.com/kilfat/BudgetKeeper/raw/master/src/main/resources/%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D1%8B.png)
 
+## Развертывание приложения
+* https://heroku.com

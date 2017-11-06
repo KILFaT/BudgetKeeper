@@ -2,10 +2,18 @@ package com.kilfat.web.controller;
 
 import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.User;
-import com.kilfat.database.service.UserService;
+import com.kilfat.database.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = ServiceConstants.USER_PATH)
@@ -40,7 +48,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    User createUser(@RequestBody User user) {
+    User createUser(@Valid @RequestBody User user) {
         return userService.saveUser(user);
     }
 }

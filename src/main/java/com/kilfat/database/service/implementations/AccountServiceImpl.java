@@ -1,11 +1,12 @@
-package com.kilfat.database.service;
+package com.kilfat.database.service.implementations;
 
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.repository.AccountRepository;
+import com.kilfat.database.service.interfaces.AccountService;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,19 +14,20 @@ import java.util.List;
 
 @Service
 @Transactional
-@Secured({"USER","ADMIN"})
-public class AccountService {
+@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @Transactional(readOnly = true)
     public Account getAccount(Long id) {
-        return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Account.class, id));
+        return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+            String.format("%s with id=%s is not found!", "Account", id)));
     }
 
     public Account saveAccount(Account account) {

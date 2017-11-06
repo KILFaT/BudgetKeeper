@@ -1,17 +1,22 @@
-package com.kilfat.database.repository;
+package com.kilfat.database.service.interfaces;
 
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.Category;
 import com.kilfat.database.entity.Template;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface TemplateRepository extends CrudRepository<Template, Long> {
+public interface TemplateService {
+
+    Template getTemplate(Long id);
+
+    Template saveTemplate(Template template);
+
+    void deleteTemplate(Template template);
 
     List<Template> findTemplatesByAccount(Account account);
 
     List<Template> findTemplatesByAccountAndCategory(Account account, Category category);
+
+    void deleteTemplate(Long templateId);
 }

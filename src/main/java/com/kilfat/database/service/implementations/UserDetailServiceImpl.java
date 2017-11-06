@@ -1,13 +1,15 @@
-package com.kilfat.database.service;
+package com.kilfat.database.service.implementations;
 
 import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.UserRole;
+import com.kilfat.database.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +17,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Component
 @Transactional
 public class UserDetailServiceImpl implements UserDetailsService {
+    @Autowired
     private UserService userService;
 
-    @Autowired
-    public UserDetailServiceImpl(UserService userService) {
-        this.userService = userService;
-    }
+//    @Autowired
+//    public UserDetailServiceImpl(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @Transactional(readOnly = true)
     @Override

@@ -12,8 +12,8 @@
         </Appender>
     </Appenders>
     <Loggers>
+        <Logger name="budgetkeeper" level="info"/>
         <Logger name="budgetkeeper" level="debug"/>
-        <Logger name="budgetkeeper" level="warn"/>
         <Root level="info">
             <AppenderRef ref="File" />
             <AppenderRef ref="Console" />

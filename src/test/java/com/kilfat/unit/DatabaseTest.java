@@ -1,13 +1,16 @@
 package com.kilfat.unit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import com.kilfat.config.DataConfigProfile;
 import com.kilfat.config.HSQLConfig;
 import com.kilfat.config.TestConfig;
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.enums.AccountType;
-import com.kilfat.database.service.AccountService;
-import com.kilfat.database.service.UserService;
+import com.kilfat.database.service.implementations.AccountServiceImpl;
+import com.kilfat.database.service.implementations.UserServiceImpl;
 import com.kilfat.exception.EntityNotFoundException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,19 +23,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 @ActiveProfiles(DataConfigProfile.HSQLDB)
 @Transactional
 @ContextConfiguration(classes = {HSQLConfig.class, TestConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DatabaseTest {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();

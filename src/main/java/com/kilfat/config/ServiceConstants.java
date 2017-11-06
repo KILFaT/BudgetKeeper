@@ -19,4 +19,6 @@ public interface ServiceConstants {
 
     String ROLE_ADMIN = RoleType.ADMIN.toString();
     String ROLE_USER = RoleType.USER.toString();
+
+    String REALM = "BUDGET_KEEPER";
 }

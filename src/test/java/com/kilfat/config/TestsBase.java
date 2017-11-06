@@ -1,5 +1,7 @@
 package com.kilfat.config;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -12,21 +14,19 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.Resource;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
 @ActiveProfiles(DataConfigProfile.HSQLDB)
-@ContextConfiguration(classes = {HSQLConfig.class, TestConfig.class, WebConfig.class})
+@ContextConfiguration(classes = {HSQLConfig.class, WebConfig.class, TestConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class TestsBase {
 
+    protected static MockMvc mockMvc;
     @Resource
     private WebApplicationContext webApplicationContext;
 
-    protected static MockMvc mockMvc;
-
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity())
+            .build();
     }
 }

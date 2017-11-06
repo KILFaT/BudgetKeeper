@@ -2,10 +2,18 @@ package com.kilfat.database.entity;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER")
@@ -17,24 +25,38 @@ public class User implements Serializable {
 //    private Long id;
 
     @Id
-    @Column(name = "USER_NAME", nullable = false, length = 40, unique = true)
+    @Column(name = "USER_NAME",
+        nullable = false,
+        length = 20,
+        unique = true)
+    @NotNull
+    @Size(min = 5,
+        max = 20)
     private String username;
 
 //    private byte[] encryptedPassword;
 
 
-    @Column(name = "PASSWORD", nullable = false, length = 60)
+    @NotNull
+    @Size(min = 6,
+        max = 60)
+    @Column(name = "PASSWORD",
+        nullable = false,
+        length = 60)
 //    @Type(type = "encryptedString")
     private String password;
 
-    @Column(name = "EMAIL", length = 80)
+    @Column(name = "EMAIL",
+        length = 80)
     private String email;
 
     @Column(name = "IMAGE")
     @Type(type = "binary")
     private byte[] image;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,
+        mappedBy = "user",
+        cascade = CascadeType.ALL)
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
     public User() {

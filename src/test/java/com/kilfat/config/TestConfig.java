@@ -8,16 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = "com.kilfat",
-        excludeFilters = {@ComponentScan.Filter(Configuration.class)})
+    excludeFilters = {@ComponentScan.Filter(Configuration.class)})
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.kilfat")
 public class TestConfig {
-//    @Bean
-//    public DataSource dataSource() {
-//        return new EmbeddedDatabaseBuilder()
-//                .setType(EmbeddedDatabaseType.HSQL)
-//                .addScript("classpath:schema.sql")
-//                .addScript("classpath:test-data.sql")
-//                .build();
-//    }
+
 }

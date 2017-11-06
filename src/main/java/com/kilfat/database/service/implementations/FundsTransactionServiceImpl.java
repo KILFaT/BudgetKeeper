@@ -1,29 +1,31 @@
-package com.kilfat.database.service;
+package com.kilfat.database.service.implementations;
 
 import com.kilfat.database.entity.FundsTransaction;
 import com.kilfat.database.repository.FundsTransactionRepository;
+import com.kilfat.database.service.interfaces.FundsTransactionService;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Secured({"USER","ADMIN"})
-public class FundsTransactionService {
+@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+public class FundsTransactionServiceImpl implements FundsTransactionService {
 
     private FundsTransactionRepository fundsTransactionRepository;
 
     @Autowired
-    public FundsTransactionService(FundsTransactionRepository fundsTransactionRepository) {
+    public FundsTransactionServiceImpl(FundsTransactionRepository fundsTransactionRepository) {
         this.fundsTransactionRepository = fundsTransactionRepository;
     }
 
     @Transactional(readOnly = true)
     public FundsTransaction getFundsTransaction(Long id) {
         return fundsTransactionRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException(FundsTransaction.class, id));
+            .orElseThrow(() -> new EntityNotFoundException(
+                String.format("%s with id=%s is not found!", "Transaction", id)));
     }
 
     public FundsTransaction saveFundsTransaction(FundsTransaction fundsTransaction) {
