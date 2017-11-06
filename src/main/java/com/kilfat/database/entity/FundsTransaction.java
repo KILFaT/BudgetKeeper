@@ -2,40 +2,67 @@ package com.kilfat.database.entity;
 
 import com.kilfat.database.entity.enums.TransactionType;
 
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "FUNDS_TRANSACTION")
 public class FundsTransaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TRANSACTION_ID", nullable = false, unique = true)
+    @Column(name = "TRANSACTION_ID",
+        nullable = false,
+        unique = true)
     private Long id;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+    @JoinColumn(name = "ACCOUNT_ID",
+        nullable = false)
     private Account account;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "CATEGORY_ID",
+        nullable = false)
     private Category category;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name = "DATE", nullable = false, length = 10)
+    @Column(name = "DATE",
+        nullable = false,
+        length = 10)
     private Date date;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "TRANSACTION_TYPE")
+    @Column(name = "TRANSACTION_TYPE",
+        nullable = false)
     private TransactionType transactionType;
 
-    @Column(name = "AMOUNT")
+    @NotNull
+    @Column(name = "AMOUNT",
+        nullable = false)
     private Integer amount;
 
     public FundsTransaction() {
     }
 
-    public FundsTransaction(Account account, Category category, Date date, TransactionType transactionType, Integer amount) {
+    public FundsTransaction(Account account, Category category, Date date, TransactionType transactionType,
+                            Integer amount) {
         this.account = account;
         this.category = category;
         this.date = date;

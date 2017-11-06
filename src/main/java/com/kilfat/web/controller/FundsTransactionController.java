@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = ServiceConstants.TRANSACTION_PATH)
 public class FundsTransactionController {
+
     private FundsTransactionService transactionService;
 
     @Autowired
@@ -24,30 +27,44 @@ public class FundsTransactionController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "{transactionId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{transactionId}",
+        method = RequestMethod.GET)
     public @ResponseBody
-    FundsTransaction getFundsTransaction(@PathVariable("transactionId") Long transactionId) {
+    FundsTransaction getFundsTransaction(
+        @PathVariable("transactionId")
+            Long transactionId) {
         return transactionService.getFundsTransaction(transactionId);
     }
 
-    @RequestMapping(value = "{transactionId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{transactionId}",
+        method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putFundsTransaction(@PathVariable("transactionId") Long transactionId, @RequestBody
-        FundsTransaction transaction) {
+    public void putFundsTransaction(
+        @PathVariable("transactionId")
+            Long transactionId,
+        @Valid
+        @RequestBody
+            FundsTransaction transaction) {
         transaction.setId(transactionId);
         transactionService.saveFundsTransaction(transaction);
     }
 
-    @RequestMapping(value = "{transactionId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{transactionId}",
+        method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFundsTransaction(@PathVariable("transactionId") Long transactionId) {
+    public void deleteFundsTransaction(
+        @PathVariable("transactionId")
+            Long transactionId) {
         transactionService.deleteFundsTransaction(transactionId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    FundsTransaction createFundsTransaction(@RequestBody FundsTransaction transaction) {
+    FundsTransaction createFundsTransaction(
+        @Valid
+        @RequestBody
+            FundsTransaction transaction) {
         return transactionService.saveFundsTransaction(transaction);
     }
 }

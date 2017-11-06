@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "USER_ROLES")
@@ -21,16 +22,22 @@ public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ROLE_ID", nullable = false, unique = true)
+    @Column(name = "USER_ROLE_ID",
+        nullable = false,
+        unique = true)
     private Integer userRoleId;
 
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_NAME", nullable = false)
+    @JoinColumn(name = "USER_NAME",
+        nullable = false)
     private User user;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "ROLE")
+    @Column(name = "ROLE",
+        nullable = false)
     private RoleType role;
 
     public UserRole() {

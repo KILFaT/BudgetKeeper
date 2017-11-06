@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = ServiceConstants.USER_PATH)
 public class UserController {
+
     private UserService userService;
 
     @Autowired
@@ -26,29 +27,44 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "{userName}",
+        method = RequestMethod.GET)
     public @ResponseBody
-    User getUser(@PathVariable("userName") String userName) {
+    User getUser(
+        @PathVariable("userName")
+            String userName) {
         return userService.getUser(userName);
     }
 
-    @RequestMapping(value = "{userName}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{userName}",
+        method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putUser(@PathVariable("userName") String userName, @RequestBody User user) {
+    public void putUser(
+        @PathVariable("userName")
+            String userName,
+        @Valid
+        @RequestBody
+            User user) {
         user.setUsername(userName);
         userService.saveUser(user);
     }
 
-    @RequestMapping(value = "{userName}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{userName}",
+        method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable("userName") String userName) {
+    public void deleteUser(
+        @PathVariable("userName")
+            String userName) {
         userService.deleteUser(userName);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    User createUser(@Valid @RequestBody User user) {
+    User createUser(
+        @Valid
+        @RequestBody
+            User user) {
         return userService.saveUser(user);
     }
 }

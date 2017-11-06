@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = ServiceConstants.CATEGORY_PATH)
 public class CategoryController {
@@ -40,6 +42,7 @@ public class CategoryController {
     public void putCategory(
         @PathVariable("categoryId")
             Long categoryId,
+        @Valid
         @RequestBody
             Category category) {
         category.setId(categoryId);
@@ -59,6 +62,7 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     Category createCategory(
+        @Valid
         @RequestBody
             Category category) {
         return categoryService.saveCategory(category);

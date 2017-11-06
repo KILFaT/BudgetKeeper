@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = ServiceConstants.ACCOUNT_PATH)
 public class AccountController {
@@ -40,6 +42,7 @@ public class AccountController {
     public void putAccount(
         @PathVariable("accountId")
             Long accountId,
+        @Valid
         @RequestBody
             Account account) {
         account.setId(accountId);
@@ -59,6 +62,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     Account createAccount(
+        @Valid
         @RequestBody
             Account account) {
         return accountService.saveAccount(account);

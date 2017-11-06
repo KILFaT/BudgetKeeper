@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = ServiceConstants.TEMPLATE_PATH)
 public class TemplateController {
+
     private TemplateService templateService;
 
     @Autowired
@@ -24,30 +27,43 @@ public class TemplateController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "{templateId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{templateId}",
+        method = RequestMethod.GET)
     public @ResponseBody
-    Template getTemplate(@PathVariable("templateId") Long templateId) {
+    Template getTemplate(
+        @PathVariable("templateId")
+            Long templateId) {
         return templateService.getTemplate(templateId);
     }
 
-    @RequestMapping(value = "{templateId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{templateId}",
+        method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putTemplate(@PathVariable("templateId") Long templateId, @RequestBody
-        Template template) {
+    public void putTemplate(
+        @PathVariable("templateId")
+            Long templateId,
+        @Valid @RequestBody
+            Template template) {
         template.setId(templateId);
         templateService.saveTemplate(template);
     }
 
-    @RequestMapping(value = "{templateId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{templateId}",
+        method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTemplate(@PathVariable("templateId") Long templateId) {
+    public void deleteTemplate(
+        @PathVariable("templateId")
+            Long templateId) {
         templateService.deleteTemplate(templateId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Template createTemplate(@RequestBody Template template) {
+    Template createTemplate(
+        @Valid
+        @RequestBody
+            Template template) {
         return templateService.saveTemplate(template);
     }
 }
