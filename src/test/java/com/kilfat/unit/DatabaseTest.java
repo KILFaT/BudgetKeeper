@@ -3,41 +3,32 @@ package com.kilfat.unit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.kilfat.config.DataConfigProfile;
-import com.kilfat.config.HSQLConfig;
-import com.kilfat.config.TestConfig;
+import com.kilfat.config.TestsBase;
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.enums.AccountType;
-import com.kilfat.database.service.implementations.AccountServiceImpl;
-import com.kilfat.database.service.implementations.UserServiceImpl;
+import com.kilfat.database.service.interfaces.AccountService;
+import com.kilfat.database.service.interfaces.UserService;
 import com.kilfat.exception.EntityNotFoundException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import javax.transaction.Transactional;
-
-@ActiveProfiles(DataConfigProfile.HSQLDB)
-@Transactional
-@ContextConfiguration(classes = {HSQLConfig.class, TestConfig.class})
-@RunWith(SpringJUnit4ClassRunner.class)
-public class DatabaseTest {
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private AccountServiceImpl accountService;
+public class DatabaseTest extends TestsBase {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AccountService accountService;
 
     @Test
+    @WithMockUser(username = "admin",
+        password = "password123",
+        authorities = {"ADMIN"})
     public void userBaseOperations() {
         User user = new User("Pavel", "password123");
         User savedUser = userService.saveUser(user);
@@ -49,6 +40,9 @@ public class DatabaseTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",
+        password = "password123",
+        authorities = {"ADMIN"})
     public void accountBaseOperations() {
         User user = new User("Oleg", "password123");
         User savedUser = userService.saveUser(user);
@@ -58,7 +52,7 @@ public class DatabaseTest {
         assertEquals(savedAccount.getUser(), account.getUser());
         Account accountFromDb = accountService.getAccount(savedAccount.getId());
         assertNotNull(accountFromDb);
-        assertEquals(accountFromDb.getUser(), account.getUser());
+        assertEquals(accountFromDb.getUser().getUsername(), account.getUser().getUsername());
         accountService.deleteAccount(account);
         expectedException.expect(EntityNotFoundException.class);
         accountService.getAccount(savedAccount.getId());
