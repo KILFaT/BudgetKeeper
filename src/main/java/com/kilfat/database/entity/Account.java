@@ -1,5 +1,6 @@
 package com.kilfat.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kilfat.database.entity.enums.AccountType;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ public class Account {
         unique = true)
     private Long id;
 
-    @NotNull
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "USER_NAME",
         nullable = false)

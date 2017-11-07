@@ -3,6 +3,7 @@ package com.kilfat.web.controller;
 import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.service.interfaces.UserService;
+import com.kilfat.web.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,10 +31,11 @@ public class UserController {
     @RequestMapping(value = "{userName}",
         method = RequestMethod.GET)
     public @ResponseBody
-    User getUser(
+    UserDTO getUser(
         @PathVariable("userName")
             String userName) {
-        return userService.getUser(userName);
+        User user = userService.getUser(userName);
+        return UserDTO.convertToDTO(user);
     }
 
     @RequestMapping(value = "{userName}",
@@ -44,8 +46,9 @@ public class UserController {
             String userName,
         @Valid
         @RequestBody
-            User user) {
-        user.setUsername(userName);
+            UserDTO userDTO) {
+        userDTO.setUsername(userName);
+        User user = UserDTO.convertToEntity(userDTO);
         userService.saveUser(user);
     }
 
@@ -61,10 +64,13 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    User createUser(
+    UserDTO createUser(
         @Valid
         @RequestBody
-            User user) {
-        return userService.saveUser(user);
+            UserDTO userDTO) {
+        User user = UserDTO.convertToEntity(userDTO);
+        user = userService.saveUser(user);
+        UserDTO createdEntity = UserDTO.convertToDTO(user);
+        return createdEntity;
     }
 }

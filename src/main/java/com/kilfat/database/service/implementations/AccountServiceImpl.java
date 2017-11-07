@@ -4,6 +4,7 @@ import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.repository.AccountRepository;
 import com.kilfat.database.service.interfaces.AccountService;
+import com.kilfat.database.service.interfaces.UserService;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,10 +19,12 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
+    private UserService userService;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, UserService userService) {
         this.accountRepository = accountRepository;
+        this.userService = userService;
     }
 
     @Transactional(readOnly = true)
@@ -31,6 +34,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Account saveAccount(Account account) {
+        User currentUser = userService.getUser(UserService.getCurrentUserName());
+        account.setUser(currentUser);
         return accountRepository.save(account);
     }
 

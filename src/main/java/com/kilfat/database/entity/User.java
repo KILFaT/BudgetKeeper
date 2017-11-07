@@ -1,5 +1,6 @@
 package com.kilfat.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
@@ -37,6 +38,7 @@ public class User implements Serializable {
 //    private byte[] encryptedPassword;
 
 
+    @JsonIgnore
     @NotNull
     @Size(min = 6,
         max = 60)
