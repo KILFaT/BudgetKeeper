@@ -17,4 +17,19 @@ public class DeserializerHelper {
         }
         return "";
     }
+
+    public static Integer getIntegerField(JsonNode node, String field) {
+        if (node.get(field) != null) {
+            return node.get(field).intValue();
+        }
+        return null;
+    }
+
+    public static Long getLongField(JsonNode node, String field) {
+        if (node.get(field) != null) {
+            return node.get(field).longValue();
+        }
+        return null;
+    }
+
 }

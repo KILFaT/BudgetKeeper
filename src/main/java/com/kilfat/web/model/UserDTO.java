@@ -61,7 +61,7 @@ public class UserDTO {
         Set<UserRole> userRoles = new HashSet<>();
         UserRole tempUserRole;
         for (String userRole : userDTO.getUserRole()) {
-            tempUserRole = new UserRole(user, RoleType.valueOf(userRole));
+            tempUserRole = new UserRole(user, RoleType.findType(userRole));
             userRoles.add(tempUserRole);
         }
         user.setUserRole(userRoles);
