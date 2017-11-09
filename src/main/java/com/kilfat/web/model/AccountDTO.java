@@ -25,9 +25,6 @@ public class AccountDTO {
 
     public static Account convertToEntity(AccountDTO accountDTO) {
         Account account = new Account();
-//        if (accountDTO.getId() != null && accountDTO.getId().length() != 0) {
-//            account.setId(Long.parseLong(accountDTO.getId()));
-//        }
         account.setId(accountDTO.getId());
         User user = new User();
         user.setUsername(accountDTO.getUserName());

@@ -25,7 +25,7 @@ public class UserRole {
     @Column(name = "USER_ROLE_ID",
         nullable = false,
         unique = true)
-    private Integer userRoleId;
+    private Long userRoleId;
 
     @NotNull
     @JsonIgnore
@@ -48,11 +48,11 @@ public class UserRole {
         this.role = role;
     }
 
-    public Integer getUserRoleId() {
+    public Long getUserRoleId() {
         return userRoleId;
     }
 
-    public void setUserRoleId(Integer userRoleId) {
+    public void setUserRoleId(Long userRoleId) {
         this.userRoleId = userRoleId;
     }
 
