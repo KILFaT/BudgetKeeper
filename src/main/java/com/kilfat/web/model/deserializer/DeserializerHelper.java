@@ -1,8 +1,14 @@
 package com.kilfat.web.model.deserializer;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.kilfat.config.ServiceConstants;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DeserializerHelper {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(ServiceConstants.DATE_FORMAT);
 
     public static JsonNode getFieldNode(JsonNode node, String field) {
         if (node.get(field) != null) {
@@ -32,4 +38,16 @@ public class DeserializerHelper {
         return null;
     }
 
+    public static Date getDateField(JsonNode node, String field) {
+        String dateAsString;
+        if (node.get(field) == null) {
+            return null;
+        }
+        dateAsString = node.get(field).textValue();
+        try {
+            return dateFormat.parse(dateAsString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,15 +1,16 @@
 package com.kilfat.web.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.Category;
 import com.kilfat.database.entity.FundsTransaction;
 import com.kilfat.database.entity.enums.TransactionType;
 import com.kilfat.web.model.deserializer.FundsTransactionDeserializer;
+import com.kilfat.web.model.serializer.JsonDateSerializer;
 
-import java.util.Date;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @JsonDeserialize(using = FundsTransactionDeserializer.class)
 public class FundsTransactionDTO {
@@ -23,9 +24,7 @@ public class FundsTransactionDTO {
     private Long categoryId;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-        pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        timezone = "GMT")
+    @JsonSerialize(using=JsonDateSerializer.class)
     private Date date;
 
     @NotNull

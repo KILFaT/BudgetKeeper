@@ -1,55 +1,33 @@
 package com.kilfat.database.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(username = "USER_ID", nullable = false, unique = true)
-//    private Long id;
-
     @Id
     @Column(name = "USER_NAME",
-        nullable = false,
-        length = 20,
-        unique = true)
-    @NotNull
-    @Size(min = 5,
-        max = 20)
+            nullable = false,
+            length = 20,
+            unique = true)
     private String username;
 
 //    private byte[] encryptedPassword;
 
 
-    @JsonIgnore
-    @NotNull
-    @Size(min = 6,
-        max = 60)
     @Column(name = "PASSWORD",
-        nullable = false,
-        length = 60)
+            nullable = false,
+            length = 60)
 //    @Type(type = "encryptedString")
     private String password;
 
     @Column(name = "EMAIL",
-        length = 80)
+            length = 80)
     private String email;
 
     @Column(name = "IMAGE")
@@ -57,8 +35,8 @@ public class User implements Serializable {
     private byte[] image;
 
     @OneToMany(fetch = FetchType.LAZY,
-        mappedBy = "user",
-        cascade = CascadeType.ALL)
+            mappedBy = "user",
+            cascade = CascadeType.ALL)
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
     public User() {

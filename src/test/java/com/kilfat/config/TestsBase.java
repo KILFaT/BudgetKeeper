@@ -1,7 +1,5 @@
 package com.kilfat.config;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 @ActiveProfiles(DataConfigProfile.HSQLDB)
 @ContextConfiguration(classes = WebConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class TestsBase {
+public abstract class TestsBase {
 
     protected static MockMvc mockMvc;
     @Autowired
@@ -25,8 +25,6 @@ public class TestsBase {
 
     @Before
     public void setUp() {
-        mockMvc =
-            MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity())
-                .build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 }

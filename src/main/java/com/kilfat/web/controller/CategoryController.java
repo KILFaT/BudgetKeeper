@@ -3,15 +3,10 @@ package com.kilfat.web.controller;
 import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.Category;
 import com.kilfat.database.service.interfaces.CategoryService;
+import com.kilfat.web.model.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,44 +22,34 @@ public class CategoryController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "{categoryId}",
-        method = RequestMethod.GET)
+    @RequestMapping(value = "{categoryId}", method = RequestMethod.GET)
     public @ResponseBody
-    Category getCategory(
-        @PathVariable("categoryId")
-            Long categoryId) {
-        return categoryService.getCategory(categoryId);
+    CategoryDTO getCategory(@PathVariable("categoryId") Long categoryId) {
+        Category category = categoryService.getCategory(categoryId);
+        return CategoryDTO.convertToDTO(category);
     }
 
-    @RequestMapping(value = "{categoryId}",
-        method = RequestMethod.PUT)
+    @RequestMapping(value = "{categoryId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putCategory(
-        @PathVariable("categoryId")
-            Long categoryId,
-        @Valid
-        @RequestBody
-            Category category) {
+    public void putCategory(@PathVariable("categoryId") Long categoryId,
+                            @Valid @RequestBody CategoryDTO categoryDTO) {
+        Category category = CategoryDTO.convertToEntity(categoryDTO);
         category.setId(categoryId);
         categoryService.saveCategory(category);
     }
 
-    @RequestMapping(value = "{categoryId}",
-        method = RequestMethod.DELETE)
+    @RequestMapping(value = "{categoryId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(
-        @PathVariable("categoryId")
-            Long categoryId) {
+    public void deleteCategory(@PathVariable("categoryId") Long categoryId) {
         categoryService.deleteCategory(categoryId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Category createCategory(
-        @Valid
-        @RequestBody
-            Category category) {
-        return categoryService.saveCategory(category);
+    CategoryDTO createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        Category category = CategoryDTO.convertToEntity(categoryDTO);
+        category = categoryService.saveCategory(category);
+        return CategoryDTO.convertToDTO(category);
     }
 }

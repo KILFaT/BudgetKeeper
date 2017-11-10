@@ -6,13 +6,7 @@ import com.kilfat.database.service.interfaces.UserService;
 import com.kilfat.web.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -29,48 +23,35 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "{userName}",
-        method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public @ResponseBody
-    UserDTO getUser(
-        @PathVariable("userName")
-            String userName) {
+    UserDTO getUser(@PathVariable("userName") String userName) {
         User user = userService.getUser(userName);
         return UserDTO.convertToDTO(user);
     }
 
     @RequestMapping(value = "{userName}",
-        method = RequestMethod.PUT)
+            method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putUser(
-        @PathVariable("userName")
-            String userName,
-        @Valid
-        @RequestBody
-            UserDTO userDTO) {
+    public void putUser(@PathVariable("userName") String userName, @Valid @RequestBody UserDTO userDTO) {
         userDTO.setUsername(userName);
         User user = UserDTO.convertToEntity(userDTO);
         userService.saveUser(user);
     }
 
     @RequestMapping(value = "{userName}",
-        method = RequestMethod.DELETE)
+            method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(
-        @PathVariable("userName")
-            String userName) {
+    public void deleteUser(@PathVariable("userName") String userName) {
         userService.deleteUser(userName);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    UserDTO createUser(
-        @Valid
-        @RequestBody
-            UserDTO userDTO) {
+    UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
         User user = UserDTO.convertToEntity(userDTO);
         user = userService.saveUser(user);
-        UserDTO createdEntity = UserDTO.convertToDTO(user);
-        return createdEntity;
+        return UserDTO.convertToDTO(user);
     }
 }

@@ -1,37 +1,47 @@
 package com.kilfat.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.enums.AccountType;
 import com.kilfat.web.model.deserializer.AccountDeserializer;
 
+import javax.validation.constraints.NotNull;
+
 @JsonDeserialize(using = AccountDeserializer.class)
 public class AccountDTO {
 
     private Long id;
+
+    @JsonIgnore
+    @NotNull
     private String userName;
+
+    @NotNull
     private String accountType;
+
+    @NotNull
     private Integer amount;
 
-    public static AccountDTO convertToDTO(Account account) {
+    public static AccountDTO convertToDTO(Account entity) {
         AccountDTO accountDTO = new AccountDTO();
-        accountDTO.setId(account.getId());
-        accountDTO.setUserName(account.getUser().getUsername());
-        accountDTO.setAccountType(account.getAccountType().toString());
-        accountDTO.setAmount(account.getAmount());
+        accountDTO.setId(entity.getId());
+        accountDTO.setUserName(entity.getUser().getUsername());
+        accountDTO.setAccountType(entity.getAccountType().toString());
+        accountDTO.setAmount(entity.getAmount());
         return accountDTO;
     }
 
-    public static Account convertToEntity(AccountDTO accountDTO) {
+    public static Account convertToEntity(AccountDTO dto) {
         Account account = new Account();
-        account.setId(accountDTO.getId());
+        account.setId(dto.getId());
         User user = new User();
-        user.setUsername(accountDTO.getUserName());
+        user.setUsername(dto.getUserName());
         account.setUser(user);
-        AccountType accountType = AccountType.findType(accountDTO.getAccountType());
+        AccountType accountType = AccountType.findType(dto.getAccountType());
         account.setAccountType(accountType);
-        account.setAmount(accountDTO.getAmount());
+        account.setAmount(dto.getAmount());
         return account;
     }
 

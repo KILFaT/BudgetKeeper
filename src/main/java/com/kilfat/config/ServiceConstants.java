@@ -21,4 +21,5 @@ public interface ServiceConstants {
     String ROLE_USER = RoleType.USER.toString();
 
     String REALM = "BUDGET_KEEPER";
+    String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 }

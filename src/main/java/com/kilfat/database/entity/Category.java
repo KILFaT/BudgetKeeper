@@ -1,13 +1,6 @@
 package com.kilfat.database.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -16,16 +9,13 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CATEGORY_ID",
-        nullable = false,
-        unique = true)
+            nullable = false,
+            unique = true)
     private Long id;
 
-    @NotNull
-    @Size(min = 5,
-        max = 100)
     @Column(name = "NAME",
-        length = 100,
-        nullable = false)
+            length = 100,
+            nullable = false)
     private String name;
 
     public Category() {

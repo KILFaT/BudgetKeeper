@@ -3,15 +3,10 @@ package com.kilfat.web.controller;
 import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.Template;
 import com.kilfat.database.service.interfaces.TemplateService;
+import com.kilfat.web.model.TemplateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,43 +22,36 @@ public class TemplateController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "{templateId}",
-        method = RequestMethod.GET)
+    @RequestMapping(value = "{templateId}", method = RequestMethod.GET)
     public @ResponseBody
-    Template getTemplate(
-        @PathVariable("templateId")
-            Long templateId) {
-        return templateService.getTemplate(templateId);
+    TemplateDTO getTemplate(@PathVariable("templateId") Long templateId) {
+        Template template = templateService.getTemplate(templateId);
+        return TemplateDTO.convertToDTO(template);
     }
 
-    @RequestMapping(value = "{templateId}",
-        method = RequestMethod.PUT)
+    @RequestMapping(value = "{templateId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putTemplate(
-        @PathVariable("templateId")
-            Long templateId,
-        @Valid @RequestBody
-            Template template) {
+    public void putTemplate(@PathVariable("templateId") Long templateId,
+                            @Valid @RequestBody TemplateDTO templateDTO) {
+        Template template = TemplateDTO.convertToEntity(templateDTO);
         template.setId(templateId);
         templateService.saveTemplate(template);
     }
 
     @RequestMapping(value = "{templateId}",
-        method = RequestMethod.DELETE)
+            method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTemplate(
-        @PathVariable("templateId")
-            Long templateId) {
+    public void deleteTemplate(@PathVariable("templateId") Long templateId) {
         templateService.deleteTemplate(templateId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Template createTemplate(
-        @Valid
-        @RequestBody
-            Template template) {
-        return templateService.saveTemplate(template);
+    TemplateDTO createTemplate(
+            @Valid @RequestBody TemplateDTO templateDTO) {
+        Template template = TemplateDTO.convertToEntity(templateDTO);
+        template = templateService.saveTemplate(template);
+        return TemplateDTO.convertToDTO(template);
     }
 }

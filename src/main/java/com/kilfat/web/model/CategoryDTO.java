@@ -4,9 +4,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kilfat.database.entity.Category;
 import com.kilfat.web.model.deserializer.CategoryDeserializer;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @JsonDeserialize(using = CategoryDeserializer.class)
 public class CategoryDTO {
     private Long id;
+
+    @NotNull
+    @Size(min = 5, max = 100)
     private String name;
 
 

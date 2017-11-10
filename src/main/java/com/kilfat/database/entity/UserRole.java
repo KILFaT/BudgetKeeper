@@ -1,20 +1,8 @@
 package com.kilfat.database.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kilfat.database.entity.enums.RoleType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USER_ROLES")
@@ -27,14 +15,11 @@ public class UserRole {
         unique = true)
     private Long userRoleId;
 
-    @NotNull
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NAME",
         nullable = false)
     private User user;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE",
         nullable = false)

@@ -1,14 +1,6 @@
 package com.kilfat.database.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "TEMPLATE")
@@ -21,19 +13,16 @@ public class Template {
         unique = true)
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID",
         nullable = false)
     private Account account;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID",
         nullable = false)
     private Category category;
 
-    @NotNull
     @Column(name = "AMOUNT")
     private Integer amount;
 
