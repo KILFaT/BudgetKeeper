@@ -21,6 +21,7 @@ public class AccountControllerTest extends TestsBase {
         authorities = {"USER"})
     public void createAccount() throws Exception {
         String json = "{\n"
+                      + "\t\"username\": \"User1\",\n"
                       + "\t\"accountType\": \"BANK_CARD\",\n"
                       + "\t\"amount\": \"1252\"\n"
                       + "}";

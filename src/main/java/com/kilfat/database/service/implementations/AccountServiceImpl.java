@@ -34,8 +34,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Account saveAccount(Account account) {
-        User currentUser = userService.getUser(UserService.getCurrentUserName());
-        account.setUser(currentUser);
+        User user = userService.getUser(account.getUser().getUsername());
+        account.setUser(user);
         return accountRepository.save(account);
     }
 

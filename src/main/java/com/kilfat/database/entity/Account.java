@@ -2,7 +2,16 @@ package com.kilfat.database.entity;
 
 import com.kilfat.database.entity.enums.AccountType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ACCOUNT")
@@ -36,6 +45,14 @@ public class Account {
         this.user = user;
         this.accountType = accountType;
         this.amount = amount;
+    }
+
+    public void decreaseAmount(Integer value) {
+        amount = amount - value;
+    }
+
+    public void increaseAmount(Integer value) {
+        amount = amount + value;
     }
 
     public Long getId() {

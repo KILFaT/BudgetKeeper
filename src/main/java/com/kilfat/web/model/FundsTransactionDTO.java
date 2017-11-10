@@ -9,8 +9,8 @@ import com.kilfat.database.entity.enums.TransactionType;
 import com.kilfat.web.model.deserializer.FundsTransactionDeserializer;
 import com.kilfat.web.model.serializer.JsonDateSerializer;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 @JsonDeserialize(using = FundsTransactionDeserializer.class)
 public class FundsTransactionDTO {
@@ -24,7 +24,7 @@ public class FundsTransactionDTO {
     private Long categoryId;
 
     @NotNull
-    @JsonSerialize(using=JsonDateSerializer.class)
+    @JsonSerialize(using = JsonDateSerializer.class)
     private Date date;
 
     @NotNull
