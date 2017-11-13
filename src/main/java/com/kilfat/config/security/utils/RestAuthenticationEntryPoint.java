@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class RestAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+
     @Override
     public void commence(final HttpServletRequest request,
                          final HttpServletResponse response,
                          final AuthenticationException authException) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
-
+        response.addHeader("X-Requested-With", "XMLHttpReques");
         PrintWriter writer = response.getWriter();
         writer.println("HTTP Status 401 : " + authException.getMessage());
     }

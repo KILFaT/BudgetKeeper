@@ -1,50 +1,36 @@
-'use strict'
+'use strict';
 
 import axios from "axios";
+import {APP_URL} from '../store/env'
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-function checkCode(res) {
-  if (res.status === -404) {
-    alert(res.msg)
-  }
-  if (res.data && (!res.data.success)) {
-    alert(res.data.error_msg)
-  }
-  return res
-}
-
 const JSON_TYPE = 'application/json';
 
 export default {
-  post (url, data) {
+  post(url, USER, data) {
     return axios({
                    method: 'post',
                    baseURL: APP_URL,
                    url,
                    data: data,
                    timeout: 10000,
-                   withCredentials: false,
+                   withCredentials: true,
                    headers: {
-                     'Access-Control-Allow-Origin:': '*',
                      'Content-Type': JSON_TYPE
                    },
                    auth: {
-                     username: 'admin',//env.USERNAME,
-                     password: 'password123'//env.PASSWORD
+                     username: USER.username,//'admin',//env.USERNAME,
+                     password: USER.password//'password123'//env.PASSWORD
                    }
                  }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
+      function (response) {
+        console.log(response);
+        return response;
+      })
   },
-  get (url, params) {
+  get(url, USER, params) {
     return axios({
                    method: 'get',
                    baseURL: APP_URL,
@@ -56,18 +42,14 @@ export default {
                      Accept: JSON_TYPE
                    },
                    auth: {
-                     username: 'admin',//env.USERNAME,
-                     password: 'password123'//env.PASSWORD
+                     username: USER.username,//'admin',//env.USERNAME,
+                     password: USER.password//'password123'//env.PASSWORD
                    }
 
                  }).then(
       function (response) {
         console.log(response);
+        return response;
       })
-    // ).then(
-    //   (res) => {
-    //     return checkCode(res)
-    //   }
-    // )
   }
 }
