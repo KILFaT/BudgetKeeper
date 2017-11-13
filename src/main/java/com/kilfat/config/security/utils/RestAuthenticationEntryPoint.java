@@ -1,4 +1,4 @@
-package com.kilfat.config.security;
+package com.kilfat.config.security.utils;
 
 import static com.kilfat.config.ServiceConstants.REALM;
 
@@ -14,12 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class RestAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
-
-    //    @Override
-//    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-//            throws IOException {
-//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-//    }
     @Override
     public void commence(final HttpServletRequest request,
                          final HttpServletResponse response,

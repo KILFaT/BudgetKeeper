@@ -28,3 +28,7 @@ mem.*
 *.iml
 .idea/
 logs/
+*.node_modules/
+node_modules/
+*.dist/
+dist/

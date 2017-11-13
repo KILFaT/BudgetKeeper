@@ -22,4 +22,7 @@ public interface ServiceConstants {
 
     String REALM = "BUDGET_KEEPER";
     String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+
+    String RESPONSE_COOKIE_NAME = "CSRF-TOKEN";
+    String REQUEST_HEADER_NAME = "X-CSRF-TOKEN";
 }
