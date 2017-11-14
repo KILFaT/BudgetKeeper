@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 
 @RestController
@@ -25,6 +27,18 @@ public class FundsTransactionController {
     @Autowired
     public FundsTransactionController(FundsTransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody
+    List<FundsTransactionDTO> getFundsTransactions() {
+        List<FundsTransaction> fundsTransactions = transactionService.getFundsTransactions();
+        List<FundsTransactionDTO> transactionDTOs = new ArrayList<>();
+        for (FundsTransaction transaction : fundsTransactions) {
+            transactionDTOs.add(FundsTransactionDTO.convertToDTO(transaction));
+        }
+        return transactionDTOs;
     }
 
     @ResponseStatus(HttpStatus.OK)

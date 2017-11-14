@@ -13,6 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
@@ -81,5 +84,14 @@ public class FundsTransactionServiceImpl implements FundsTransactionService {
                 break;
         }
         accountService.saveAccount(transactionToDelete.getAccount());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<FundsTransaction> getFundsTransactions() {
+        ArrayList<FundsTransaction> fundsTransactions = new ArrayList<>();
+        Iterable<FundsTransaction> iterable = fundsTransactionRepository.findAll();
+        iterable.iterator().forEachRemaining(fundsTransactions::add);
+        return fundsTransactions;
     }
 }

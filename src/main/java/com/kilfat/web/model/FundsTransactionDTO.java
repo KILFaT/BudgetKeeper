@@ -20,8 +20,12 @@ public class FundsTransactionDTO {
     @NotNull
     private Long accountId;
 
+    private String accountType;
+
     @NotNull
     private Long categoryId;
+
+    private String categoryName;
 
     @NotNull
     @JsonSerialize(using = JsonDateSerializer.class)
@@ -36,41 +40,33 @@ public class FundsTransactionDTO {
     public FundsTransactionDTO() {
     }
 
-    public FundsTransactionDTO(Long id, Long accountId, Long categoryId, Date date, String transactionType,
-                               Integer amount) {
-        this.id = id;
-        this.accountId = accountId;
-        this.categoryId = categoryId;
-        this.date = date;
-        this.transactionType = transactionType;
-        this.amount = amount;
-    }
-
     public static FundsTransaction convertToEntity(FundsTransactionDTO DTO) {
-        FundsTransaction fundsTransaction = new FundsTransaction();
-        fundsTransaction.setId(DTO.getId());
+        FundsTransaction entity = new FundsTransaction();
+        entity.setId(DTO.getId());
         Account account = new Account();
         account.setId(DTO.getAccountId());
-        fundsTransaction.setAccount(account);
-        fundsTransaction.setAmount(DTO.getAmount());
+        entity.setAccount(account);
+        entity.setAmount(DTO.getAmount());
         Category category = new Category();
         category.setId(DTO.getCategoryId());
-        fundsTransaction.setCategory(category);
-        fundsTransaction.setDate(DTO.getDate());
+        entity.setCategory(category);
+        entity.setDate(DTO.getDate());
         TransactionType transactionType = TransactionType.findType(DTO.getTransactionType());
-        fundsTransaction.setTransactionType(transactionType);
-        return fundsTransaction;
+        entity.setTransactionType(transactionType);
+        return entity;
     }
 
     public static FundsTransactionDTO convertToDTO(FundsTransaction entity) {
-        FundsTransactionDTO fundsTransactionDTO = new FundsTransactionDTO();
-        fundsTransactionDTO.setId(entity.getId());
-        fundsTransactionDTO.setAccountId(entity.getAccount().getId());
-        fundsTransactionDTO.setAmount(entity.getAmount());
-        fundsTransactionDTO.setCategoryId(entity.getCategory().getId());
-        fundsTransactionDTO.setDate(entity.getDate());
-        fundsTransactionDTO.setTransactionType(entity.getTransactionType().toString());
-        return fundsTransactionDTO;
+        FundsTransactionDTO dto = new FundsTransactionDTO();
+        dto.setId(entity.getId());
+        dto.setAccountId(entity.getAccount().getId());
+        dto.setAmount(entity.getAmount());
+        dto.setCategoryId(entity.getCategory().getId());
+        dto.setDate(entity.getDate());
+        dto.setTransactionType(entity.getTransactionType().toString());
+        dto.setAccountType(entity.getAccount().getAccountType().toString());
+        dto.setCategoryName(entity.getCategory().getName());
+        return dto;
     }
 
     public Long getId() {
@@ -119,5 +115,21 @@ public class FundsTransactionDTO {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
