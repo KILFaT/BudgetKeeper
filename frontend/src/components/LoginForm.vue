@@ -20,6 +20,13 @@
         errorMessage: null
       }
     },
+    watch: {
+      errorMessage: function (val) {
+        if (!this.errorMessage || this.errorMessage === '') {
+          this.setAuthorized("true");
+        }
+      }
+    },
     methods: {
       doLoginAction: function () {
         if (!this.user.username || !this.user.password) {
@@ -30,9 +37,7 @@
         this.setPassword(this.user.password);
         http.get("user/", this.user).then((message) => this.checkSuccessStatus(message.response)).catch(
           (error) => this.checkErrorStatus(error.response));
-        if (!this.errorMessage || this.errorMessage === '') {
-          this.setAuthorized("true");
-        }
+
       },
       checkErrorStatus: function (response) {
         this.errorMessage = '';

@@ -31,9 +31,9 @@
       <el-table-column
         fixed="right"
         label="Operation">
-        <!--<template scope="scope">-->
-        <!--<el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>-->
-        <!--</template>-->
+        <template scope="scope">
+          <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination class="pagination" layout="prev, pager, next" :total="total" :page-size="pageSize"
@@ -49,6 +49,7 @@
   import DbModal from './DbModal.vue'
   import http from '../utils/http'
   import {TRANSACTION_URL} from '../store/env'
+  import {mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -60,25 +61,39 @@
 //        account: '',
 //        email: '',
         dialogFormVisible: false,
-        form: '',
+        form: ''
+//        ,
+//        isAuthorizate: false
       }
     },
+    watch: {
+      isAuthorizate: function (val) {
+        this.updateTable();
+      }
+    },
+    computed: {
+      ...mapGetters({
+                      isAuthorizate: 'authorized'
+                    })
+    },
     components: {
-      DbModal
+      DbModal,
     },
     mounted() {
-      this.getTransactions();
-      Bus.$on('filterResultData', (data) => {
-        this.tableData = data.results;
-        this.total = data.total_pages;
-        this.pageSize = data.count;
-//        this.email = data.email;
-//        this.account = data.account;
-
-      });
+      this.updateTable();
     },
 
     methods: {
+      updateTable: function () {
+        this.getTransactions();
+        Bus.$on('filterResultData', (data) => {
+          this.tableData = data.results;
+          this.total = data.total_pages;
+          this.pageSize = data.count;
+//        this.email = data.email;
+//        this.account = data.account;
+        });
+      },
       tableRowClassName({row, rowIndex}) {
 //        var asd = 1;
 //        asd++;
@@ -128,6 +143,7 @@
       editItem: function (index, rows) {
         this.dialogFormVisible = true;
 //        const itemId = rows[index].id;
+        this.form = this.tableData[index];
 //        const idurl = 'http://127.0.0.1:8000/api/persons/detail/' + itemId;
 //        this.$axios.get(idurl).then((response) => {
 //          this.form = response.data;

@@ -4,6 +4,8 @@ import com.kilfat.config.ServiceConstants;
 import com.kilfat.database.entity.FundsTransaction;
 import com.kilfat.database.service.interfaces.FundsTransactionService;
 import com.kilfat.web.model.FundsTransactionDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 @RequestMapping(value = ServiceConstants.TRANSACTION_PATH)
 public class FundsTransactionController {
 
+    private Logger LOG = LoggerFactory.getLogger(FundsTransactionController.class);
     private FundsTransactionService transactionService;
 
     @Autowired

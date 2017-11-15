@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,6 +43,21 @@ public class FundsTransactionControllerTest extends TestsBase {
         mockMvc.perform(get(ACCOUNT_PATH + "1")).andExpect(status().isOk())
             .andExpect(jsonPath("$.amount").value(900))
             .andDo(print());
+        json = "{\n"
+               + "\t\"accountId\": 1,\n"
+               + "\t\"transactionType\": \"COSTS\",\n"
+               + "\t\"amount\": 200,\n"
+               + "\t\"date\": \"23-11-2017 12:12:12\",\n"
+               + "\t\"categoryId\": 1\n"
+               + "}";
+        mockMvc.perform(put(TRANSACTION_PATH + integer.longValue()).contentType(MediaType.APPLICATION_JSON)
+                            .content(json)).andExpect(status().isNoContent());
+        mockMvc.perform(get(TRANSACTION_PATH + integer.longValue()))
+            .andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(get(ACCOUNT_PATH + "1")).andExpect(status().isOk())
+            .andExpect(jsonPath("$.amount").value(700))
+            .andDo(print());
+
     }
 
     @Test
