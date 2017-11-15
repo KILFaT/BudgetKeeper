@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="error" v-if="errorMessage">{{ errorMessage }}</p>
     <el-table
       :data="tableData"
       border
@@ -32,7 +33,7 @@
         fixed="right"
         label="Operation">
         <template scope="scope">
-          <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
+          <el-button @click="editItem(scope.$index, tableData)" type="primary" icon="el-icon-edit">Edit</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,7 +62,9 @@
 //        account: '',
 //        email: '',
         dialogFormVisible: false,
-        form: ''
+        form: '',
+        errorMessage: null,
+        loading: false
 //        ,
 //        isAuthorizate: false
       }
@@ -111,14 +114,30 @@
       },
 
       getTransactions: function () {
+        this.loading = true;
         http.get(TRANSACTION_URL, this.$store.getters.user).then((response) => {
           this.tableData = response.data;
           this.total = response.data.length;
           this.pageSize = response.data.length;
           console.log(response.data);
-        }).catch(function (response) {
-          console.log(response)
-        });
+        }).catch(
+          (error) => this.checkErrorStatus(error.response));
+        this.loading = false;
+      },
+      checkErrorStatus: function (response) {
+        this.errorMessage = '';
+        if (response) {
+          if (!response.status) {
+            this.errorMessage = 'An error has occurred!';
+          }
+          if (response.status === 403) {
+            this.errorMessage = "Unauthorized! Need to login!"
+          }
+        } else {
+          this.errorMessage = "Connection problems! ";
+        }
+        console.log(response);
+        return response;
       },
 //      getCustomers: function () {
 //        this.$axios.get(this.apiUrl, {
@@ -156,6 +175,12 @@
 </script>
 
 <style>
+  @import url("//unpkg.com/element-ui@2.0.4/lib/theme-chalk/index.css");
+
+  body {
+    margin: 0;
+  }
+
   .table {
     margin-top: 30px;
     table-layout: fixed;
@@ -170,6 +195,10 @@
 
   .el-table .incoming {
     background: #f0f9eb;
+  }
+
+  .error {
+    color: red;
   }
 
   .pagination {

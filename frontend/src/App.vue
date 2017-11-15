@@ -1,7 +1,7 @@
 <template>
   <!--<div id="app" class="container">-->
   <!---->
-    <!--<HelloWorld></HelloWorld>-->
+  <!--<HelloWorld></HelloWorld>-->
   <!--</div>-->
   <div class="wrapper">
     <el-col :span="20" class="login-form">
@@ -10,16 +10,16 @@
     </el-col>
 
     <el-row class="container">
-      <el-col :span="4" class="menu">
+      <!--<el-col :span="4" class="menu">-->
+
+      <!--</el-col>-->
+      <el-col class="content">
         <db-sidebar></db-sidebar>
-      </el-col>
-      <el-col :span="20" class="content">
+        <div class="line"></div>
         <db-filterinput></db-filterinput>
+        <add-transaction></add-transaction>
         <db-table></db-table>
-
       </el-col>
-
-
     </el-row>
 
     <el-row>
@@ -27,7 +27,6 @@
         <footer class="footer">
           <db-footer></db-footer>
         </footer>
-
       </el-col>
     </el-row>
   </div>
@@ -42,6 +41,8 @@
   import DbTable from './components/DbTable.vue'
   import DbFooter from './components/DbFooter.vue'
   import ElRow from "element-ui/packages/row/src/row";
+  import AddTransaction from './components/AddTransaction.vue'
+  //  import ElMenu from "element-ui/packages/menu/src/menu"
 
   export default {
     name: 'app',
@@ -52,7 +53,8 @@
       DbSidebar,
       DbFilterinput,
       DbTable,
-      DbFooter
+      DbFooter,
+      AddTransaction
     }
   }
 </script>
@@ -72,7 +74,7 @@
   }
 
   body {
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
     display: flex;
     min-height: 100vh;
@@ -103,6 +105,10 @@
   .menu {
     height: 100%;
     background-color: #eef1f6;
+  }
+
+  .line {
+    height: 20px;
   }
 
   .content {

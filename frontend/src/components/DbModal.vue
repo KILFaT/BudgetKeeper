@@ -35,7 +35,7 @@
   import {TRANSACTION_URL} from '../store/env'
 
   export default {
-    data(){
+    data() {
       return {
         formLabelWidth: '120px',
       }
@@ -53,7 +53,8 @@
           .catch(function (error) {
             console.log(error);
           });
-        location.reload();
+        this.canclemodal();
+//        location.reload();
       },
       canclemodal: function () {
         this.$emit('canclemodal');

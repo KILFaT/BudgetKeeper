@@ -10,6 +10,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
@@ -38,5 +41,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     public void deleteCategory(Long categoryId) {
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Category> getCategories() {
+        ArrayList<Category> categories = new ArrayList<>();
+        Iterable<Category> iterable = categoryRepository.findAll();
+        iterable.iterator().forEachRemaining(categories::add);
+        return categories;
     }
 }

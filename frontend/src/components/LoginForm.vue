@@ -22,7 +22,7 @@
     },
     watch: {
       errorMessage: function (val) {
-        if (!this.errorMessage || this.errorMessage === '') {
+        if (!val || val === '') {
           this.setAuthorized("true");
         }
       }
@@ -35,18 +35,18 @@
         }
         this.setUsername(this.user.username);
         this.setPassword(this.user.password);
-        http.get("user/", this.user).then((message) => this.checkSuccessStatus(message.response)).catch(
+        http.get("user/", this.user).then((message) => this.checkSuccessStatus(message)).catch(
           (error) => this.checkErrorStatus(error.response));
 
       },
       checkErrorStatus: function (response) {
-        this.errorMessage = '';
         if (!response) {
-          return response;
+          this.errorMessage = "Connection problems! ";
+//          return response;
         }
         if (response) {
           if (!response.status) {
-            this.errorMessage = "Connection problems! "
+            this.errorMessage = 'An error has occurred!';
           }
           if (response.status === 403) {
             this.errorMessage = "Incorrect login or password! "
