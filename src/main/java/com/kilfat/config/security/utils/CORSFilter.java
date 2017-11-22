@@ -2,6 +2,8 @@ package com.kilfat.config.security.utils;
 
 import static com.kilfat.config.ServiceConstants.REQUEST_HEADER_NAME;
 
+import com.kilfat.config.ServiceConstants;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CORSFilter implements Filter {
 
-    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8080", "http://127.0.0.1:8080");
+    private final List<String> allowedOrigins = ServiceConstants.ALLOWED_ORIGINS;
 
     public void destroy() {
     }

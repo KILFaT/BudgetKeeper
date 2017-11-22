@@ -2,6 +2,9 @@ package com.kilfat.config;
 
 import com.kilfat.database.entity.enums.RoleType;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface ServiceConstants {
 
     String API_URL = "/api/";
@@ -25,4 +28,7 @@ public interface ServiceConstants {
 
     String RESPONSE_COOKIE_NAME = "CSRF-TOKEN";
     String REQUEST_HEADER_NAME = "X-CSRF-TOKEN";
+
+    List<String> ALLOWED_ORIGINS = Arrays
+        .asList("http://localhost:8080", "http://127.0.0.1:8080", "https://budgetkeeper-ui.herokuapp.com");
 }
