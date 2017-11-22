@@ -7,6 +7,8 @@
     <groupId>com.kilfat</groupId>
     <artifactId>budgetkeeper</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
+    <description>BudgetKeeper Application</description>
     <properties>
         <spring.version>5.0.1.RELEASE</spring.version>
         <jdk.version>1.8</jdk.version>
@@ -156,6 +158,29 @@
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>9.3.3.v20150827</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
