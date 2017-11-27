@@ -39,13 +39,13 @@ public class DeserializerHelper {
     }
 
     public static Date getDateField(JsonNode node, String field) {
-        String dateAsString;
-        if (node.get(field) == null) {
+        long date;
+        if (node.get(field) == null || node.get(field).isLong() == false) {
             return null;
         }
-        dateAsString = node.get(field).textValue();
+        date = node.get(field).asLong();
         try {
-            return dateFormat.parse(dateAsString);
+            return dateFormat.parse(date*1000L);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
