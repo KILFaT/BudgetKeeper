@@ -13,11 +13,12 @@ import java.util.Date;
 
 @Component
 public class JsonDateSerializer extends JsonSerializer<Date> {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(ServiceConstants.DATE_FORMAT);
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(ServiceConstants.UNIX_DATE_FORMAT);
 
     @Override
     public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)
-            throws IOException, JsonProcessingException {
+        throws IOException, JsonProcessingException {
         String formattedDate = dateFormat.format(date);
         gen.writeString(formattedDate);
     }

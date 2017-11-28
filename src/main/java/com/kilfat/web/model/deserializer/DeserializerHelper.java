@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DeserializerHelper {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(ServiceConstants.DATE_FORMAT);
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(ServiceConstants.UNIX_DATE_FORMAT);
 
     public static JsonNode getFieldNode(JsonNode node, String field) {
         if (node.get(field) != null) {
@@ -45,7 +46,7 @@ public class DeserializerHelper {
         }
         date = node.get(field).asLong();
         try {
-            return dateFormat.parse(date*1000L);
+            return dateFormat.parse(String.valueOf(date * 1000L));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
