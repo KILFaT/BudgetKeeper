@@ -8,12 +8,18 @@ import com.kilfat.config.security.utils.CSRFFilter;
 import com.kilfat.config.security.utils.RestAuthenticationEntryPoint;
 import com.kilfat.config.security.utils.RestAuthenticationSuccessHandler;
 import com.kilfat.config.security.utils.RestLogoutSuccessHandler;
+import com.kilfat.config.security.utils.method.CustomAuthenticationProvider;
+import com.kilfat.config.security.utils.method.CustomMethodSecurityExpressionHandler;
+import com.kilfat.config.security.utils.method.CustomPermissionEvaluator;
 import com.kilfat.database.service.implementations.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.PermissionEvaluator;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,14 +41,9 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 @ComponentScan({"com.kilfat"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    public SecurityConfig(SavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler) {
-//        this.authenticationSuccessHandler = authenticationSuccessHandler;
-//    }
-
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(getUserDetailService());//.passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(getAuthenticationProvider());
     }
 
     @Override
@@ -107,5 +108,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new RestLogoutSuccessHandler();
+    }
+
+    @Bean
+    public AuthenticationProvider getAuthenticationProvider() {
+        return new CustomAuthenticationProvider();
+    }
+
+    @Bean
+    public PermissionEvaluator getPermissionEvaluator() {
+        return new CustomPermissionEvaluator();
+    }
+
+    @Bean
+    public MethodSecurityExpressionHandler getMethodSecurityExpressionHandler() {
+        return new CustomMethodSecurityExpressionHandler();
     }
 }

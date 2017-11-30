@@ -14,7 +14,7 @@ public interface UserService {
     }
 
     static UserPrincipal getCurrentUser() {
-        return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication();
+        return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     User getUser(String userName);

@@ -1,7 +1,5 @@
 package com.kilfat.config;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
 import com.kilfat.config.security.SecurityConfig;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -17,26 +15,30 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.Filter;
+
 @ActiveProfiles(DataConfigProfile.HSQLDB)
 @ContextConfiguration(classes = {WebConfig.class, SecurityConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
+//@TestExecutionListeners(listeners = WithSecurityContextTestExecutionListener.class)
 public abstract class TestsBase {
 
     protected static MockMvc mockMvc;
     @Autowired
     private WebApplicationContext webApplicationContext;
-
+    @Autowired
+    private Filter springSecurityFilterChain;
     @Autowired
     @Qualifier("userDetailServiceImpl")
     private UserDetailsService userDetailsService;
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilters(springSecurityFilterChain).build();
     }
 
-    public UserDetails getUser(String username){
-
+    public UserDetails getUser(String username) {
+        return userDetailsService.loadUserByUsername(username);
     }
 }

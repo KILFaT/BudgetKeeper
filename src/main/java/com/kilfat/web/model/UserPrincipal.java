@@ -4,25 +4,37 @@ import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserPrincipal implements UserDetails {
+public class UserPrincipal extends org.springframework.security.core.userdetails.User {
 
     private User user;
 
-    public UserPrincipal() {
-    }
-
-    public UserPrincipal(User user) {
+    public UserPrincipal(String username, String password,
+                         Collection<? extends GrantedAuthority> authorities, User user) {
+        super(username, password, authorities);
         this.user = user;
     }
 
+    public UserPrincipal(String username, String password, boolean enabled, boolean accountNonExpired,
+                         boolean credentialsNonExpired, boolean accountNonLocked,
+                         Collection<? extends GrantedAuthority> authorities, User user) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.user = user;
+    }
+
+//    public UserPrincipal() {
+//    }
+//
+//    public UserPrincipal(User user) {
+//        this.user = user;
+//    }
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (UserRole userRole : user.getUserRole()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(userRole.getRole().toString()));
