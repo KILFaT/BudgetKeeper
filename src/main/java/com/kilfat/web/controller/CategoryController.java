@@ -6,6 +6,7 @@ import com.kilfat.database.service.interfaces.CategoryService;
 import com.kilfat.web.model.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,13 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "names",
         method = RequestMethod.GET)
     public @ResponseBody
     List<CategoryDTO> getCategories() {
-        List<Category> categories = categoryService.getCategories();
+        List<Category> categories = categoryService.getUserCategories();
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         for (Category category : categories) {
             categoryDTOs.add(CategoryDTO.convertToDTO(category));
@@ -42,6 +44,7 @@ public class CategoryController {
         return categoryDTOs;
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "{categoryId}",
         method = RequestMethod.GET)
@@ -53,6 +56,7 @@ public class CategoryController {
         return CategoryDTO.convertToDTO(category);
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @RequestMapping(value = "{categoryId}",
         method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -67,6 +71,7 @@ public class CategoryController {
         categoryService.saveCategory(category);
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @RequestMapping(value = "{categoryId}",
         method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -76,6 +81,7 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody

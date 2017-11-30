@@ -4,6 +4,7 @@ package com.kilfat.database.service.implementations;
 import com.kilfat.database.entity.Category;
 import com.kilfat.database.repository.CategoryRepository;
 import com.kilfat.database.service.interfaces.CategoryService;
+import com.kilfat.database.service.interfaces.UserService;
 import com.kilfat.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,5 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
         Iterable<Category> iterable = categoryRepository.findAll();
         iterable.iterator().forEachRemaining(categories::add);
         return categories;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Category> getUserCategories() {
+        return categoryRepository.findAllByUser(UserService.getCurrentUser().getUser());
     }
 }

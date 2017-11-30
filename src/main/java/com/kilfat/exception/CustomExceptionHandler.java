@@ -3,6 +3,7 @@ package com.kilfat.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -72,9 +73,22 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         MethodArgumentTypeMismatchException ex, WebRequest request) {
         String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-        ErrorInfo errorInfo =
-            new ErrorInfo(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        ErrorInfo errorInfo = new ErrorInfo(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(errorInfo, new HttpHeaders(), errorInfo.getStatus());
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+        String error = ex.getMessage();
+        ErrorInfo errorInfo = new ErrorInfo(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(errorInfo, errorInfo.getStatus());
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
+        String error = ex.getMessage();
+        ErrorInfo errorInfo = new ErrorInfo(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(errorInfo, errorInfo.getStatus());
     }
 
     @Override
@@ -117,14 +131,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-        ErrorInfo
-            errorInfo =
-            new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
-        return new ResponseEntity<Object>(errorInfo, new HttpHeaders(), errorInfo.getStatus());
-    }
-
-    @ExceptionHandler({RuntimeException.class})
-    public ResponseEntity<Object> handleAllRuntime(RuntimeException ex, WebRequest request) {
         ErrorInfo
             errorInfo =
             new ErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
