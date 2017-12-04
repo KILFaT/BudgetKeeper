@@ -6,6 +6,7 @@ import com.kilfat.database.repository.AccountRepository;
 import com.kilfat.database.service.interfaces.AccountService;
 import com.kilfat.database.service.interfaces.UserService;
 import com.kilfat.exception.EntityNotFoundException;
+import com.kilfat.web.model.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Transactional(readOnly = true)
-    public List<Account> getAccountsByUser(User user) {
-        return accountRepository.findAccountsByUser(user);
+    public List<AccountDTO> getAccountsByUser(User user) {
+        List<Account> accounts = accountRepository.findAccountsByUser(user);
+        return AccountDTO.convertToDTO(accounts);
     }
 
     public void deleteAccount(Long accountId) {

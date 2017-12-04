@@ -63,7 +63,7 @@ public class CategoryController {
     public void putCategory(
         @PathVariable("categoryId")
             Long categoryId,
-        @Valid
+            @Valid
         @RequestBody
             CategoryDTO categoryDTO) {
         Category category = CategoryDTO.convertToEntity(categoryDTO);

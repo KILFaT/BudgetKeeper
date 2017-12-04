@@ -44,9 +44,9 @@ public class DeserializerHelper {
         if (node.get(field) == null || node.get(field).isLong() == false) {
             return null;
         }
-        date = node.get(field).asLong();
+        date = node.get(field).asLong()/1000L;
         try {
-            return dateFormat.parse(String.valueOf(date * 1000L));
+            return dateFormat.parse(String.valueOf(date));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

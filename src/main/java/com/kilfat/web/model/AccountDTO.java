@@ -7,6 +7,8 @@ import com.kilfat.database.entity.User;
 import com.kilfat.database.entity.enums.AccountType;
 import com.kilfat.web.model.deserializer.AccountDeserializer;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 
 @JsonDeserialize(using = AccountDeserializer.class)
@@ -23,6 +25,27 @@ public class AccountDTO {
 
     @NotNull
     private Integer amount;
+
+    public AccountDTO() {
+    }
+
+    public AccountDTO(Long id, String userName, String accountType, Integer amount) {
+        this.id = id;
+        this.userName = userName;
+        this.accountType = accountType;
+        this.amount = amount;
+    }
+
+    public static List<AccountDTO> convertToDTO(List<Account> entities) {
+        List<AccountDTO> dtos = new ArrayList<>();
+        if (entities == null) {
+            return dtos;
+        }
+        for (Account entity : entities) {
+            dtos.add(convertToDTO(entity));
+        }
+        return dtos;
+    }
 
     public static AccountDTO convertToDTO(Account entity) {
         AccountDTO accountDTO = new AccountDTO();
@@ -43,16 +66,6 @@ public class AccountDTO {
         account.setAccountType(accountType);
         account.setAmount(dto.getAmount());
         return account;
-    }
-
-    public AccountDTO() {
-    }
-
-    public AccountDTO(Long id, String userName, String accountType, Integer amount) {
-        this.id = id;
-        this.userName = userName;
-        this.accountType = accountType;
-        this.amount = amount;
     }
 
     public Long getId() {

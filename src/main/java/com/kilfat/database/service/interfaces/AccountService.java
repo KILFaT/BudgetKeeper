@@ -2,6 +2,7 @@ package com.kilfat.database.service.interfaces;
 
 import com.kilfat.database.entity.Account;
 import com.kilfat.database.entity.User;
+import com.kilfat.web.model.AccountDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface AccountService {
 
     void deleteAccount(Account account);
 
-    List<Account> getAccountsByUser(User user);
+    List<AccountDTO> getAccountsByUser(User user);
 
     void deleteAccount(Long accountId);
 }

@@ -24,7 +24,7 @@ public interface ServiceConstants {
     String ROLE_USER = RoleType.USER.toString();
 
     String REALM = "BUDGET_KEEPER";
-    String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    String DATE_FORMAT = "dd-MM-yyyy";
     String UNIX_DATE_FORMAT = "ssssssssss"; // 10*s = Unix date in seconds.
 
     String RESPONSE_COOKIE_NAME = "CSRF-TOKEN";
